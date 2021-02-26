@@ -11,8 +11,8 @@ export const backToTopScroll = () => {
   const pageTop = $("#js-pagetop"); // pageTop
   const scrollTop = $(window).scrollTop(); // スクロールトップ
   if (scrollTop > target) {
-    pageTop.fadeIn();
+    pageTop.fadeIn("slow");
   } else {
-    pageTop.fadeOut();
+    pageTop.fadeOut("slow");
   }
 };

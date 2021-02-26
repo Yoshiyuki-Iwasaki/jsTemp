@@ -29,6 +29,7 @@ siteFooter
 
   &__inner__pagetop {
     position: fixed;
+    display: none;
     bottom: 30px;
     right: 30px;
     width: 70px;
@@ -36,7 +37,6 @@ siteFooter
     background: #333;
     border-radius: 50%;
     cursor: pointer;
-    @include u-trs;
     @include u-hoverOp;
   }
 }
