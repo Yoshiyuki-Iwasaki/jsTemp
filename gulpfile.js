@@ -2,8 +2,19 @@ const { src, dest, watch, series, parallel } = require("gulp");
 ejs = require("gulp-ejs");
 rename = require("gulp-rename");
 sass = require("gulp-sass");
-typescript = require("gulp-typescript");
+imagemin = require("gulp-imagemin");
+changed = require("gulp-changed");
+imageminJpg = require("imagemin-jpeg-recompress");
+imageminPng = require("imagemin-pngquant");
+imageminGif = require("imagemin-gifsicle");
+imageminSvgo = require("imagemin-svgo");
+cssmin = require("gulp-cssmin");
+sftp = require("gulp-sftp");
+plumber = require("gulp-plumber");
+notify = require("gulp-notify");
+htmlmin = require("gulp-htmlmin");
 babel = require("gulp-babel");
+eslint = require("gulp-eslint");
 browserSync = require("browser-sync");
 webpack = require("webpack");
 webpackStream = require("webpack-stream"); // gulpでwebpackを使うために必要なプラグイン
@@ -25,7 +36,7 @@ const CONF = {
     OUTPUT: "./dist/assets/js",
   },
   IMAGE: {
-    SOURCE: "./src/image/*",
+    SOURCE: "./src/image/**/*.+(jpg|jpeg|JPG|png|PNG|gif|svg)",
     OUTPUT: "./dist/assets/image",
   },
   LIB: {
@@ -68,10 +79,18 @@ const compileEjs = () => {
   return (
     src(CONF.EJS.SOURCE)
       // pipe() 1つ一つの処理をつなげる。
+      .pipe(plumber(notify.onError("Error: <%= error.message %>")))
       .pipe(ejs({}, {}, { ext: ".html" }))
       .pipe(rename({ extname: ".html" }))
+      .pipe(htmlmin({ collapseWhitespace: true }))
       .pipe(dest(CONF.EJS.OUTPUT))
   );
+};
+
+var options = {
+  outputStyle: "compressed",
+  sourceMap: true,
+  sourceComments: false,
 };
 
 // style.scssをタスクを作成する
@@ -79,8 +98,9 @@ const compileSass = done => {
   // style.scssファイルを取得
   return (
     src(CONF.SASS.SOURCE)
+      .pipe(plumber(notify.onError("Error: <%= error.message %>")))
       // Sassのコンパイルを実行
-      .pipe(sass())
+      .pipe(sass(options))
       // cssフォルダー以下に保存
       .pipe(dest(CONF.SASS.OUTPUT))
   );
@@ -88,8 +108,11 @@ const compileSass = done => {
 };
 
 const bundleJs = () => {
-  // gulp image で実行するタスク
   return src(CONF.JS.SOURCE) //結果をwatchへ返却する
+    .pipe(plumber(notify.onError("Error: <%= error.message %>")))
+    .pipe(eslint()) //(＊3)
+    .pipe(eslint.format()) //(＊4)
+    .pipe(eslint.failAfterError()) //(＊5)
     .pipe(
       babel({
         presets: ["@babel/preset-env"],
@@ -100,16 +123,43 @@ const bundleJs = () => {
 };
 
 const LibFunc = () => {
-  // gulp image で実行するタスク
   return src(CONF.LIB.SOURCE) //結果をwatchへ返却する
+    .pipe(plumber(notify.onError("Error: <%= error.message %>")))
     .pipe(dest(CONF.LIB.OUTPUT)); //指定のディレクトリに移動させる
 };
 
 const imageFunc = () => {
-  // gulp image で実行するタスク
-  return src(CONF.IMAGE.SOURCE) //結果をwatchへ返却する
+  return src(CONF.IMAGE.SOURCE) //サイト全体の画像を指定
+    .pipe(plumber(notify.onError("Error: <%= error.message %>")))
+    .pipe(changed(CONF.IMAGE.SOURCE)) //変更があるかチェック
+    .pipe(
+      imagemin([
+        imageminPng(),
+        imageminJpg(),
+        imageminGif({
+          interlaced: false,
+          optimizationLevel: 3,
+          colors: 180,
+        }),
+        imagemin.svgo(),
+      ])
+    ) //結果をwatchへ返却する
     .pipe(dest(CONF.IMAGE.OUTPUT)); //指定のディレクトリに移動させる
 };
+
+// const FtpFunc = () => {
+//   return src([
+//     "**", // アップロードしたいファイルを指定
+//   ]).pipe(
+//     sftp({
+//       // FTP情報を入力
+//       host: "orchiddingo5.sakura.ne.jp",
+//       user: "orchiddingo5",
+//       pass: "h/sa6zE-Tsh,",
+//       remotePath: "/home/orchiddingo5/www/test", // リモート側のパス　（デフォルトは "/"）
+//     })
+//   );
+// };
 
 //Watch
 const watchFiles = () => {
@@ -117,7 +167,6 @@ const watchFiles = () => {
   watch(CONF.SASS.SOURCE, series(compileSass, browserReload));
   watch(CONF.IMAGE.SOURCE, series(imageFunc, browserReload));
   watch(CONF.LIB.SOURCE, series(LibFunc, browserReload));
-  // watch(CONF.TS.SOURCE, series(bundleTs, browserReload));
   watch(CONF.JS.SOURCE, series(bundleJs, browserReload));
 };
 
@@ -125,7 +174,7 @@ exports.compileEjs = compileEjs;
 exports.compileSass = compileSass;
 exports.imageFunc = imageFunc;
 exports.LibFunc = LibFunc;
-// exports.bundleTs = bundleTs;
+// exports.FtpFunc = FtpFunc;
 exports.bundleJs = bundleJs;
 
 exports.default = series(
