@@ -1,42 +1,14 @@
 /*====================================================================
 base / font
 ====================================================================*/
-$items: "ThaiSansNeue-Bold", "ThaiSansNeue-ExtraBold", "ThaiSansNeue-Regular",
-  "ThaiSansNeue-Black", "ThaiSansNeue-SemiBold", "ThaiSansNeue-ExtraLight",
-  "ThaiSansNeue-SemiBoldItalic", "ThaiSansNeue-Light", "ThaiSansNeue-UltraLight";
+$items: "NotoSansJP-Light", "NotoSansJP-Regular", "NotoSansJP-Medium",
+  "NotoSansJP-Thin";
 
 @each $item in $items {
   @font-face {
     font-family: $item;
-    font-weight: 400;
-    src: url(/fonts/#{$item}.ttf);
-    font-display: block;
+    src: url("../font/#{$item}.ttf");
   }
-}
-
-@font-face {
-  font-family: "Montserrat-Regular", Meiryo, sans-serif;
-  src: local("../font/Montserrat-Regular.ttf");
-}
-
-@font-face {
-  font-family: "NotoSansJP-Light";
-  src: local("../font/NotoSansJP-Light.otf");
-}
-
-@font-face {
-  font-family: "NotoSansJP-Regular";
-  src: local("../font/NotoSansJP-Regular.otf");
-}
-
-@font-face {
-  font-family: "NotoSansJP-Medium";
-  src: local("../font/NotoSansJP-Medium.otf");
-}
-
-@font-face {
-  font-family: "NotoSansJP-Thin";
-  src: local("../font/NotoSansJP-Thin.otf");
 }
 
 @mixin fontMSP {
