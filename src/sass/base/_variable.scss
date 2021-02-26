@@ -1,38 +1,13 @@
 // color
 $white: #fff;
 $black: #2e2d2c;
-$black01: #171717;
-
-$blue01: #176688;
-$blue02: #6a7ea3;
-$blue03: #6a97a8;
-
+$blue: #176688;
 $gray: #f7f7f7;
-$gray01: #707070;
-$gray02: #c1c1c1;
-$gray03: #e3e2e2;
-$gray04: #f5f5f5;
-$gray05: #e9e8e8;
-$gray06: #bfbfbf;
-$gray07: #808080;
-$gray08: #e5e5e5;
-
 $yellow: #b39f5d;
-$yellow02: #bda862;
-$yellow03: #b07766;
-$yellow04: #b5885e;
-
-$green01: #8ba37c;
-$green02: #7aa397;
-$green03: #6a97a8;
-
+$green: #8ba37c;
 $orange: #ef7901;
-
-$red01: #900e0e;
-$red02: #ad7ba3;
-$red03: #b57980;
-
-$purple01: #8779a3;
+$red: #900e0e;
+$purple: #8779a3;
 
 // breakpoints
 $contentCenter: 1000px;
@@ -47,6 +22,7 @@ $headerHeightSP: 50px;
 $wpAdminBarPC: 32px;
 $wpAdminBarSP: 46px;
 
+// breakpoint
 $breakpoints: (
   "sm": (
     min-width: 576px,
@@ -63,4 +39,40 @@ $breakpoints: (
   "xxl": (
     min-width: 1400px,
   ),
+) !default;
+
+// easing
+$easings: (
+  // sine
+  in-sine: cubic-bezier(0.47, 0, 0.745, 0.715),
+  out-sine: cubic-bezier(0.39, 0.575, 0.565, 1),
+  in-out-sine: cubic-bezier(0.445, 0.05, 0.55, 0.95),
+  // quad
+  in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53),
+  out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94),
+  in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955),
+  // cubic
+  in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19),
+  out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1),
+  in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1),
+  // quart
+  in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22),
+  out-quart: cubic-bezier(0.165, 0.84, 0.44, 1),
+  in-out-quart: cubic-bezier(0.77, 0, 0.175, 1),
+  // quint
+  in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06),
+  out-quint: cubic-bezier(0.23, 1, 0.32, 1),
+  in-out-quint: cubic-bezier(0.86, 0, 0.07, 1),
+  // expo
+  in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035),
+  out-expo: cubic-bezier(0.19, 1, 0.22, 1),
+  in-out-expo: cubic-bezier(1, 0, 0, 1),
+  // circ
+  in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.335),
+  out-circ: cubic-bezier(0.075, 0.82, 0.165, 1),
+  in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86),
+  // back
+  in-back: cubic-bezier(0.6, -0.28, 0.735, 0.045),
+  out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275),
+  in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55)
 ) !default;

@@ -1,3 +1,14 @@
+//@記法 animation: animation-foo 1s ease(out-expo) .4s both;
+@function ease($easing) {
+  @if map-has-key($easings, $easing) {
+    @return map-get($easings, $easing);
+  }
+
+  // 定義されていないイージングが指定された時は警告を出して初期値のeaseを返す
+  @warn 'イージング"#{$easing}"は定義されていません';
+  @return ease;
+}
+
 @keyframes anim_dian {
   0% {
     transform: translate(0, 0px);
