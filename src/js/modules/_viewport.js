@@ -1,5 +1,6 @@
 import $ from "jquery";
 // VIEWPORT MANIPULATION
+
 export const viewport = () => {
   let _ua = (function (u) {
     return {
@@ -31,3 +32,14 @@ export const viewport = () => {
     );
   }
 };
+
+const _viewport = document.querySelector('meta[name="viewport"]');
+export function switchViewport() {
+  const value =
+    window.outerWidth > 360
+      ? "width=device-width,initial-scale=1"
+      : "width=360";
+  if (_viewport.getAttribute("content") !== value) {
+    _viewport.setAttribute("content", value);
+  }
+}
