@@ -1,25 +1,29 @@
 const { src, dest, watch, series, parallel } = require("gulp");
 ejs = require("gulp-ejs");
 rename = require("gulp-rename");
-sass = require("gulp-sass");
-imagemin = require("gulp-imagemin");
 changed = require("gulp-changed");
+sass = require("gulp-sass");
+autoprefixer = require("gulp-autoprefixer");
+sftp = require("gulp-sftp");
+eslint = require("gulp-eslint");
+babel = require("gulp-babel");
+// ブラウザ自動リロード関連のプラグイン
+browserSync = require("browser-sync");
+//エラー通知関連のプラグイン
+plumber = require("gulp-plumber");
+notify = require("gulp-notify");
+//ファイル圧縮関連のプラグイン
+cssmin = require("gulp-cssmin");
+htmlmin = require("gulp-htmlmin");
+//画像圧縮関連のプラグイン
+imagemin = require("gulp-imagemin");
 imageminJpg = require("imagemin-jpeg-recompress");
 imageminPng = require("imagemin-pngquant");
 imageminGif = require("imagemin-gifsicle");
 imageminSvgo = require("imagemin-svgo");
-cssmin = require("gulp-cssmin");
-autoprefixer = require("gulp-autoprefixer");
-sftp = require("gulp-sftp");
-plumber = require("gulp-plumber");
-notify = require("gulp-notify");
-htmlmin = require("gulp-htmlmin");
-babel = require("gulp-babel");
-eslint = require("gulp-eslint");
-browserSync = require("browser-sync");
+// webpack関連のプラグイン
 webpack = require("webpack");
-webpackStream = require("webpack-stream"); // gulpでwebpackを使うために必要なプラグイン
-// webpackの設定ファイルの読み込み
+webpackStream = require("webpack-stream");
 webpackConfig = require("./webpack.config.js");
 
 //ディレクトリ構成
