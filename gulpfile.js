@@ -9,6 +9,7 @@ imageminPng = require("imagemin-pngquant");
 imageminGif = require("imagemin-gifsicle");
 imageminSvgo = require("imagemin-svgo");
 cssmin = require("gulp-cssmin");
+autoprefixer = require("gulp-autoprefixer");
 sftp = require("gulp-sftp");
 plumber = require("gulp-plumber");
 notify = require("gulp-notify");
@@ -101,6 +102,8 @@ const compileSass = done => {
       .pipe(plumber(notify.onError("Error: <%= error.message %>")))
       // Sassのコンパイルを実行
       .pipe(sass(options))
+      // プレフィックス追加
+      .pipe(autoprefixer())
       // cssフォルダー以下に保存
       .pipe(dest(CONF.SASS.OUTPUT))
   );

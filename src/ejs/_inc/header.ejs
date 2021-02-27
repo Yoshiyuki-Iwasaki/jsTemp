@@ -7,7 +7,12 @@ pageDir: 'blog' }, { pageName: 'Contact', pageDir: 'contact' } ] %>
     <h1 class="siteHeader__inner__logo">
       <a class="siteHeader__inner__logo__link">ロゴ</a>
     </h1>
-    <nav id="gnav" class="siteHeader__inner__gnav" role="navigation">
+    <nav
+      id="gnav"
+      class="siteHeader__inner__gnav"
+      role="navigation"
+      aria-label="サイト内メニュー"
+    >
       <ul class="siteHeader__inner__gnav__list" role="list">
         <% for (var i in pages) { %>
         <li class="siteHeader__inner__gnav__list__item" role="listitem">
